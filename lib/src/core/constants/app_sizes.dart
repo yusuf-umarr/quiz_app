@@ -4,8 +4,6 @@ class AppSizes {
   static double horizontal_padding = SizeConfig.safeBlockHorizontal! * 4;
   static double vertical_padding = SizeConfig.safeBlockVertical! * 2;
 
-
-
   static double tiny_text = SizeConfig.safeBlockHorizontal! * 3;
   static double small_text = SizeConfig.safeBlockHorizontal! * 3.5;
   static double medium_text = SizeConfig.safeBlockHorizontal! * 4;
@@ -13,8 +11,10 @@ class AppSizes {
   static double large_text = SizeConfig.safeBlockHorizontal! * 5;
 
   static double tiny_dimension = SizeConfig.safeBlockVertical! * 0.3;
+  static double xtiny_dimension = SizeConfig.safeBlockVertical! * 0.35;
   static double small_dimension = SizeConfig.safeBlockVertical! * 0.5;
   static double medium_dimension = SizeConfig.safeBlockVertical! * 1;
+  static double xmedium_dimension = SizeConfig.safeBlockVertical! * 1.5;
   static double big_dimension = SizeConfig.safeBlockVertical! * 2;
   static double large_dimension = SizeConfig.safeBlockVertical! * 3;
   static double xlarge_dimension = SizeConfig.safeBlockVertical! * 3.5;

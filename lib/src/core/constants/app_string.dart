@@ -1,18 +1,24 @@
 class AppString {
   //AUTHENTICATION
-    static const String welcome = 'Welcome';
+  static const String welcome = 'Welcome ';
 //Sign In
   static const String quiz_app = 'QUIZ APP';
   static const String username = 'Username';
   static const String password = 'Password';
   static const String sign_in = 'Sign In';
+  static const String sign_up = 'Sign Up';
   static const String register = 'Register';
-  static const String forgot_password = 'Forgot Password';
-  static const String dont_have_account = "Don't have an account ?";
+  static const String forgot_password = 'Forgot Password ?';
+  static const String dont_have_account = "Don't have an account? ";
+  static const String existing_user = "Existing user? ";
+  static const String reset_password = "Reset Password ";
+  static const String enter_email_reset_pass = "Enter your email and create a new password ";
+  static const String go_back_sign_in = "Go back and ";
 
 //Sign up
-  static const String introduce_yourself = "Introduce Yourself ?";
-  static const String choose_your_bio_desc = "Choose your gender, email, username and password";
+  static const String introduce_yourself = "Introduce Yourself";
+  static const String choose_your_bio_desc =
+      "Enter your email, username and password";
   static const String username_hint = "Enter your username";
   static const String email_hint = "Enter your email";
   static const String password_hint = "Enter your password";
@@ -21,7 +27,6 @@ class AppString {
   static const String take_photo = "Take a picture or upload from gallery";
   static const String upload_take = "Upload/ Take photo";
   static const String done = "Done";
-
 
 //Home
   static const String top_quiz_cate = "Top Quiz Categories";
@@ -34,8 +39,6 @@ class AppString {
   static const String category = "Category";
   static const String profile = "Profile";
 
-
-
   static const String quiz = "Quiz";
   static const String question = "Question";
   static const String quit = "Quit";
@@ -45,10 +48,6 @@ class AppString {
   static const String take_new_quiz = "Take New Quiz";
   static const String share_result = "Share Results";
   static const String your_score = "Your Score";
-  static const String congratulations = "Congratulations";
-
-
-
-
-
+  static const String congratulations = "Congratulations!";
+  static const String you_have_unlock = "You have unlock a new badge";
 }
