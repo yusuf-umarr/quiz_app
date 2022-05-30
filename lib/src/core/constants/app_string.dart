@@ -12,13 +12,14 @@ class AppString {
   static const String dont_have_account = "Don't have an account? ";
   static const String existing_user = "Existing user? ";
   static const String reset_password = "Reset Password ";
-  static const String enter_email_reset_pass = "Enter your email and create a new password ";
+  static const String enter_email_reset_pass =
+      "Enter your email and create a new password ";
   static const String go_back_sign_in = "Go back and ";
 
 //Sign up
   static const String introduce_yourself = "Introduce Yourself";
   static const String choose_your_bio_desc =
-      "Enter your email, username and password";
+      "Enter your email, username, password and choose your profile picture";
   static const String username_hint = "Enter your username";
   static const String email_hint = "Enter your email";
   static const String password_hint = "Enter your password";
@@ -50,4 +51,8 @@ class AppString {
   static const String your_score = "Your Score";
   static const String congratulations = "Congratulations!";
   static const String you_have_unlock = "You have unlock a new badge";
+
+  //category 
+    static const String quiz_categories = "Quiz Categories";
+
 }

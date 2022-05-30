@@ -7,8 +7,9 @@ import '../core/utilities/size-config.dart';
 class QuizBox extends StatelessWidget {
   final String? text;
   final String? img;
+  final Color? color;
   final Function()? ontap;
-  const QuizBox({Key? key, this.text, required this.img, this.ontap})
+  const QuizBox({Key? key, this.text, required this.img, this.ontap, this.color})
       : super(key: key);
 
   @override
@@ -27,7 +28,7 @@ class QuizBox extends StatelessWidget {
           children: [
             productImage(img),
             Spacer(),
-            Text(text!, style: TextStyle(fontSize: AppSizes.tiny_text)),
+            Text(text!, style: TextStyle(fontSize: AppSizes.tiny_text, color: color ?? AppColor.blackColor)),
           ],
         ));
   }

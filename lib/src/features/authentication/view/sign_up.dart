@@ -16,7 +16,7 @@ class SignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-        UserViewModel userViewModel = context.watch<UserViewModel>();
+    UserViewModel userViewModel = context.watch<UserViewModel>();
 
     return Scaffold(
         backgroundColor: AppColor.bgColor,
@@ -36,10 +36,8 @@ class SignUpScreen extends StatelessWidget {
                       FontWeight.w700, AppColor.whiteColor),
                 ]),
                 SizedBox(height: AppSizes.small_dimension),
-                Row(children: [
-                  homeText(AppString.choose_your_bio_desc, AppSizes.small_text,
-                      FontWeight.w400, AppColor.textColor),
-                ]),
+                homeText(AppString.choose_your_bio_desc, AppSizes.small_text,
+                    FontWeight.w400, AppColor.textColor),
                 SizedBox(height: AppSizes.xxxxlarge_dimension),
                 CustomInput(
                     alignText: TextAlign.start,
@@ -61,8 +59,11 @@ class SignUpScreen extends StatelessWidget {
                     onChanged: (val) async {}),
                 SizedBox(height: AppSizes.xxxlarge_dimension),
                 userViewModel.profileImage != null
-            ? profileImageContainer(userViewModel)
-            : camaraIcon(userViewModel),
+                    ? profileImageContainer(userViewModel)
+                    : camaraIcon(userViewModel),
+                SizedBox(height: AppSizes.small_dimension),
+                homeText(AppString.upload_take, AppSizes.small_text,
+                    FontWeight.w500, AppColor.textColor),
                 SizedBox(height: AppSizes.xxxlarge_dimension),
                 AppLargeButton(
                     text: AppString.register,
@@ -89,24 +90,23 @@ class SignUpScreen extends StatelessWidget {
           ),
         ));
   }
+
   camaraIcon(userViewModel) {
     return InkWell(
-      onTap: () => userViewModel.pickImage(),
-      child: CircleAvatar(
-        backgroundColor: AppColor.whiteColor.withOpacity(0.1),
-        radius: SizeConfig.safeBlockHorizontal! * 13,
-        child: Container(
-          child: Image.asset(
-            AppImage.profileImg
-            // AppIcons.camera_icon,
-            // fit: BoxFit.cover,
+        onTap: () => userViewModel.pickImage(),
+        child: CircleAvatar(
+          radius: AppSizes.xxxlarge_dimension,
+          child: Container(
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+              image: DecorationImage(
+                  fit: BoxFit.cover, image: AssetImage(AppImage.profileImg)),
+            ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 
-   profileImageContainer(userViewModel) {
+  profileImageContainer(userViewModel) {
     return InkWell(
       onTap: () => userViewModel.pickImage(),
       child: CircleAvatar(
@@ -125,6 +125,7 @@ class SignUpScreen extends StatelessWidget {
       ),
     );
   }
+
   homeText(text, fontSize, fontWeight, color) {
     return Text(
       text,
