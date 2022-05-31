@@ -55,4 +55,12 @@ class AppString {
   //category 
     static const String quiz_categories = "Quiz Categories";
 
+
+    //onboard desc
+        static const String onboard_desc_one = "Quiz Categories";
+        static const String onboard_desc_two = "Quiz Categories";
+        static const String onboard_desc_three = "Quiz Categories";
+        static const String onboard_desc_four = "Quiz Categories";
+
+
 }

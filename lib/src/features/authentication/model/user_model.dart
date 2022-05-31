@@ -1,0 +1,9 @@
+class UserModel {
+
+
+ var onboardModel = [
+
+  ];
+
+ 
+}

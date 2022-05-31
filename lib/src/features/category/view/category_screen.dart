@@ -23,10 +23,7 @@ class CategoryScreen extends StatelessWidget {
             padding:
                 EdgeInsets.symmetric(horizontal: AppSizes.horizontal_padding),
             child: ListView(children: [
-              // Column(children: [
-              //   categoryText(AppString.quiz_categories, AppSizes.large_text,
-              //       FontWeight.w700, AppColor.whiteColor),
-              // ]),
+              
               SizedBox(
                 height: AppSizes.big_dimension,
               ),

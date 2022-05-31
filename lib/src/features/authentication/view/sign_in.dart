@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:quiz_app/src/core/constants/app_color.dart';
 import 'package:quiz_app/src/core/constants/app_image.dart';
 import 'package:quiz_app/src/core/constants/app_string.dart';
 import 'package:quiz_app/src/core/utilities/size-config.dart';
 import 'package:quiz_app/src/features/authentication/view/sign_up.dart';
+import 'package:quiz_app/src/features/authentication/view_model/user_view_model.dart';
 import 'package:quiz_app/src/widgets/custom_input.dart';
 import 'package:quiz_app/src/widgets/large_buttons.dart';
 
@@ -15,32 +17,35 @@ class SignInScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    UserViewModel userViewModel = context.watch<UserViewModel>();
+
     return Scaffold(
         backgroundColor: AppColor.bgColor,
-        body: Container(
-          padding: EdgeInsets.symmetric(horizontal: AppSizes.large_text),
-          child: ListView(
-            children: [
-              Column(children: [
+        body: SafeArea(
+          child: SingleChildScrollView (
+            child: Container(
+              height: SizeConfig.safeBlockVertical! *100,
+              padding: EdgeInsets.symmetric(
+                  horizontal: AppSizes.large_text, vertical: AppSizes.large_text),
+              child: Column(children: [
+                homeText(AppString.welcome, AppSizes.large_dimension,
+                    FontWeight.w700, AppColor.iconColor),
                 SizedBox(height: AppSizes.xxlarge_dimension),
-                Image.asset(AppImage.thinking_img,
-                    height: SizeConfig.safeBlockVertical! * 15,
-                    width: SizeConfig.safeBlockVertical! * 9),
-                SizedBox(height: AppSizes.medium_dimension),
-                homeText(AppString.welcome, AppSizes.big_text, FontWeight.w700,
-                    AppColor.whiteColor),
+                onboardContainer(userViewModel),
                 SizedBox(height: AppSizes.xxxxlarge_dimension),
-                CustomInput(
-                    alignText: TextAlign.start,
-                    label: AppString.email_hint,
-                    hint: '',
-                    onChanged: (val) async {}),
-                SizedBox(height: AppSizes.xxxlarge_dimension),
-                CustomInput(
-                    alignText: TextAlign.start,
-                    label: AppString.password_hint,
-                    hint: '',
-                    onChanged: (val) async {}),
+                Column(children: [
+                  CustomInput(
+                      alignText: TextAlign.start,
+                      label: AppString.email_hint,
+                      hint: '',
+                      onChanged: (val) async {}),
+                  SizedBox(height: AppSizes.xxxlarge_dimension),
+                  CustomInput(
+                      alignText: TextAlign.start,
+                      label: AppString.password_hint,
+                      hint: '',
+                      onChanged: (val) async {}),
+                ]),
                 SizedBox(height: AppSizes.xlarge_dimension),
                 Row(
                   children: [
@@ -81,8 +86,8 @@ class SignInScreen extends StatelessWidget {
                         FontWeight.w500, AppColor.iconColor),
                   )
                 ])
-              ])
-            ],
+              ]),
+            ),
           ),
         ));
   }
@@ -96,5 +101,50 @@ class SignInScreen extends StatelessWidget {
           fontWeight: fontWeight,
           color: color),
     );
+  }
+
+  onboardContainer(userViewModel) {
+    return Flexible(
+            fit: FlexFit.tight,
+
+        child: PageView.builder(
+            controller: userViewModel.pageController,
+            // onPageChanged: selectedPageIndex,
+            // onPageChanged: userViewModel.openNextIndex,
+            itemCount: userViewModel.onboardList.length,
+            itemBuilder: (context, index) {
+              return Container(
+                child: Column(
+                  children: [
+                    onBoardImage(index, userViewModel),
+                    SizedBox(height: SizeConfig.safeBlockVertical! * 2),
+                    onBoardDesc(index, userViewModel),
+                    SizedBox(height: SizeConfig.safeBlockVertical! * 1),
+                  ],
+                ),
+              );
+            }));
+  }
+
+  //uses to diplay the onbord image
+  onBoardImage(index, userViewModel) {
+    return Center(
+      child: Image.asset(
+        userViewModel.onboardList[index].image,
+        fit: BoxFit.fill,
+        height: SizeConfig.safeBlockHorizontal! * 55,
+        width: SizeConfig.safeBlockHorizontal! * 70,
+      ),
+    );
+  }
+
+  //uses to display the onboard description
+  onBoardDesc(index, userViewModel) {
+    return Text(userViewModel.onboardList[index].description,
+        style: TextStyle(
+            fontFamily: 'inter',
+            fontSize: AppSizes.medium_text,
+            fontWeight: FontWeight.w500,
+            color: AppColor.textColor));
   }
 }
