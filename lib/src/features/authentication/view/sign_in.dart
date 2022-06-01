@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quiz_app/src/core/constants/app_color.dart';
@@ -13,20 +15,28 @@ import '../../../core/constants/app_sizes.dart';
 import '../../bottom_nav/bottom_nav.dart';
 
 class SignInScreen extends StatelessWidget {
-  const SignInScreen({Key? key}) : super(key: key);
+  SignInScreen({Key? key}) : super(key: key);
+  Timer? timer;
+  @override
 
   @override
   Widget build(BuildContext context) {
     UserViewModel userViewModel = context.watch<UserViewModel>();
 
+    Future.delayed(const Duration(milliseconds: 100), () {
+          userViewModel.nextPage();
+        });
+
+  
     return Scaffold(
         backgroundColor: AppColor.bgColor,
         body: SafeArea(
-          child: SingleChildScrollView (
+          child: SingleChildScrollView(
             child: Container(
-              height: SizeConfig.safeBlockVertical! *100,
+              height: SizeConfig.safeBlockVertical! * 100,
               padding: EdgeInsets.symmetric(
-                  horizontal: AppSizes.large_text, vertical: AppSizes.large_text),
+                  horizontal: AppSizes.large_text,
+                  vertical: AppSizes.large_text),
               child: Column(children: [
                 homeText(AppString.welcome, AppSizes.large_dimension,
                     FontWeight.w700, AppColor.iconColor),
@@ -49,7 +59,7 @@ class SignInScreen extends StatelessWidget {
                 SizedBox(height: AppSizes.xlarge_dimension),
                 Row(
                   children: [
-                    Spacer(),
+                    const Spacer(),
                     InkWell(
                       onTap: () {},
                       child: homeText(
@@ -63,8 +73,10 @@ class SignInScreen extends StatelessWidget {
                 SizedBox(height: AppSizes.xlarge_dimension),
                 AppLargeButton(
                     onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => BottomNav()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const BottomNav()));
                     },
                     text: AppString.sign_in,
                     backgroundColor: AppColor.iconColor),
@@ -80,7 +92,7 @@ class SignInScreen extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => SignUpScreen()));
+                              builder: (context) => const SignUpScreen()));
                     },
                     child: homeText(AppString.register, AppSizes.small_text,
                         FontWeight.w500, AppColor.iconColor),
@@ -105,12 +117,11 @@ class SignInScreen extends StatelessWidget {
 
   onboardContainer(userViewModel) {
     return Flexible(
-            fit: FlexFit.tight,
-
+        fit: FlexFit.tight,
         child: PageView.builder(
             controller: userViewModel.pageController,
             // onPageChanged: selectedPageIndex,
-            // onPageChanged: userViewModel.openNextIndex,
+            onPageChanged: userViewModel.openNextIndex,
             itemCount: userViewModel.onboardList.length,
             itemBuilder: (context, index) {
               return Container(
