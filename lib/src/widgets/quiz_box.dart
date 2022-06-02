@@ -14,23 +14,26 @@ class QuizBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        padding: EdgeInsets.symmetric(
-            vertical: AppSizes.large_dimension,
-            horizontal: AppSizes.horizontal_padding),
-        // width
-        decoration: BoxDecoration(
-            color: AppColor.whiteColor,
-            borderRadius: BorderRadius.circular(AppSizes.big_dimension)),
-        height: SizeConfig.safeBlockVertical! * 17,
-        width: SizeConfig.safeBlockHorizontal! * 27,
-        child: Column(
-          children: [
-            productImage(img),
-            Spacer(),
-            Text(text!, style: TextStyle(fontSize: AppSizes.tiny_text, color: color ?? AppColor.blackColor)),
-          ],
-        ));
+    return InkWell(
+      onTap:ontap,
+      child: Container(
+          padding: EdgeInsets.symmetric(
+              vertical: AppSizes.large_dimension,
+              horizontal: AppSizes.horizontal_padding),
+          // width
+          decoration: BoxDecoration(
+              color: AppColor.whiteColor,
+              borderRadius: BorderRadius.circular(AppSizes.big_dimension)),
+          height: SizeConfig.safeBlockVertical! * 17,
+          width: SizeConfig.safeBlockHorizontal! * 27,
+          child: Column(
+            children: [
+              productImage(img),
+              Spacer(),
+              Text(text!, style: TextStyle(fontSize: AppSizes.tiny_text, color: color ?? AppColor.blackColor)),
+            ],
+          )),
+    );
   }
 
   Widget productImage(image) {

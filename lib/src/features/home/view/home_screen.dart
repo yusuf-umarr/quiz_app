@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_app/src/core/constants/app_sizes.dart';
+import 'package:quiz_app/src/features/home/view/question_screen.dart';
 import '../../../core/constants/app_color.dart';
 import '../../../core/constants/app_image.dart';
 import '../../../core/constants/app_string.dart';
@@ -7,7 +8,7 @@ import '../../../core/utilities/size-config.dart';
 import '../../../widgets/quiz_box.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -112,9 +113,17 @@ class HomeScreen extends StatelessWidget {
               child: Wrap(
                   spacing: AppSizes.big_dimension,
                   runSpacing: AppSizes.large_dimension,
-                  children: const [
+                  children: [
                     QuizBox(
-                        img: AppImage.math_logo, text: AppString.mathematics),
+                        img: AppImage.math_logo,
+                        text: AppString.mathematics,
+                        ontap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const QuestionScreen()));
+                        }),
                     QuizBox(
                         img: AppImage.math_logo, text: AppString.mathematics),
                     QuizBox(

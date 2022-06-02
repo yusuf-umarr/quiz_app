@@ -12,7 +12,7 @@ import 'package:quiz_app/src/widgets/custom_input.dart';
 import 'package:quiz_app/src/widgets/large_buttons.dart';
 
 import '../../../core/constants/app_sizes.dart';
-import '../../bottom_nav/bottom_nav.dart';
+import '../../bottom_nav/view/bottom_nav.dart';
 
 class SignInScreen extends StatelessWidget {
   SignInScreen({Key? key}) : super(key: key);
@@ -76,7 +76,7 @@ class SignInScreen extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const BottomNav()));
+                              builder: (context) =>  BottomNav()));
                     },
                     text: AppString.sign_in,
                     backgroundColor: AppColor.iconColor),

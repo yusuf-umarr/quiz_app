@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:quiz_app/src/features/home/view_model/home_view_model.dart';
 import 'package:quiz_app/src/widgets/buttonWidget.dart';
 import 'package:quiz_app/src/widgets/startIcon.dart';
 
@@ -8,76 +10,71 @@ import '../../../core/constants/app_string.dart';
 import '../../../core/utilities/size-config.dart';
 import '../../../widgets/check_button_container_widget.dart';
 import '../../../widgets/divider_break_line.dart';
+import '../model/question_model.dart';
 
 class QuestionScreen extends StatelessWidget {
   const QuestionScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    HomeViewModel homeViewModel = context.watch<HomeViewModel>();
+
     int? qtn = 06;
     return Scaffold(
         backgroundColor: AppColor.bgColor,
-        body: Container(
-            padding: EdgeInsets.symmetric(
-                horizontal: AppSizes.horizontal_padding,
-                vertical: AppSizes.vertical_padding),
-            child: ListView(
-              children: [
-                questionText(
-                    AppString.mathematics + " " + AppString.quiz,
-                    AppSizes.xlarge_dimension,
-                    FontWeight.w400,
-                    AppColor.textColor),
-                SizedBox(height: AppSizes.big_dimension),
-                Row(children: [
-                  questionText(AppString.question, AppSizes.xlarge_dimension,
-                      FontWeight.w700, AppColor.whiteColor),
-                  SizedBox(width: AppSizes.small_dimension),
-                  questionText(qtn.toString(), AppSizes.xxlarge_dimension,
-                      FontWeight.w700, AppColor.whiteColor),
-                  SizedBox(width: AppSizes.small_dimension),
-                  questionText("/20", AppSizes.xxlarge_dimension,
-                      FontWeight.w400, AppColor.textColor),
-                ]),
-                dividerLines(20),
-                Container(
-                  height: SizeConfig.safeBlockVertical! * 16,
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [questionsBox()]),
-                ),
+        body: SafeArea(
+          child: Container(
+              padding: EdgeInsets.symmetric(
+                  horizontal: AppSizes.horizontal_padding,
+                  vertical: AppSizes.vertical_padding),
+              child: Column(
+                children: [
+                  questionText(
+                      AppString.mathematics + " " + AppString.quiz,
+                      AppSizes.xlarge_dimension,
+                      FontWeight.w400,
+                      AppColor.textColor),
+                  SizedBox(height: AppSizes.big_dimension),
+                  Row(children: [
+                    questionText(AppString.question, AppSizes.xlarge_dimension,
+                        FontWeight.w700, AppColor.whiteColor),
+                    SizedBox(width: AppSizes.small_dimension),
+                    questionText(qtn.toString(), AppSizes.xxlarge_dimension,
+                        FontWeight.w700, AppColor.whiteColor),
+                    SizedBox(width: AppSizes.small_dimension),
+                    questionText("/20", AppSizes.xxlarge_dimension,
+                        FontWeight.w400, AppColor.textColor),
+                  ]),
+                  dividerLines(20),
+                  //QUESTION
+                  questionContainer(homeViewModel),
 
-                SizedBox(height: AppSizes.large_dimension),
-                optionsWidget(),
-                optionsWidget(),
-                optionsWidget(),
-                optionsWidget(),
-                // Spacer(),
-                SizedBox(height: AppSizes.xxxxlarge_dimension),
+                  SizedBox(height: AppSizes.xxxxlarge_dimension),
 
-                Row(
-                  children: [
-                    ButtonWidget(
-                      textColor: AppColor.whiteColor,
-                      iconWidget: Row(children: [
-                        Icon(Icons.power_settings_new,
-                            color: AppColor.whiteColor),
-                        SizedBox(width: AppSizes.small_dimension),
-                      ]),
-                      text: '${AppString.quit} ${AppString.quiz}',
-                      bgColor: AppColor.blackColor,
-                      ontap: () {},
-                    ),
-                    Spacer(),
-                    ButtonWidget(
+                  Row(
+                    children: [
+                      ButtonWidget(
                         textColor: AppColor.whiteColor,
-                        bgColor: AppColor.iconColor,
-                        text: 'Next',
-                        ontap: () {}),
-                  ],
-                )
-              ],
-            )));
+                        iconWidget: Row(children: [
+                          Icon(Icons.power_settings_new,
+                              color: AppColor.whiteColor),
+                          SizedBox(width: AppSizes.small_dimension),
+                        ]),
+                        text: '${AppString.quit} ${AppString.quiz}',
+                        bgColor: AppColor.blackColor,
+                        ontap: () {},
+                      ),
+                      Spacer(),
+                      ButtonWidget(
+                          textColor: AppColor.whiteColor,
+                          bgColor: AppColor.iconColor,
+                          text: 'Next',
+                          ontap: () {}),
+                    ],
+                  )
+                ],
+              )),
+        ));
   }
 
   questionText(text, fontSize, fontWeight, color) {
@@ -109,25 +106,23 @@ class QuestionScreen extends StatelessWidget {
         ));
   }
 
-  questionsBox() {
+  questionsBox(question) {
     return Column(
       children: [
-        questionText(
-            'The graphs of the two linear equations ax + by =c  and bx -ay = c, where a,b and c are all not equal to zero.',
-            AppSizes.medium_text,
-            FontWeight.w500,
+        questionText(question, AppSizes.medium_text, FontWeight.w500,
             AppColor.whiteColor),
       ],
     );
   }
 
-  optionsWidget() {
+  optionsWidget(option, index) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: AppSizes.horizontal_padding),
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          print('selected index ${index.Options}');
+        },
         child: Container(
-            // margin: EdgeInsets.symmetric(vertical: AppSizes.horizontal_padding),
             decoration: BoxDecoration(
                 border: Border.all(color: AppColor.greenColor),
                 borderRadius: BorderRadius.circular(AppSizes.big_dimension)),
@@ -138,8 +133,8 @@ class QuestionScreen extends StatelessWidget {
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  questionText('Are parallel', AppSizes.medium_text,
-                      FontWeight.w500, AppColor.whiteColor),
+                  questionText(option, AppSizes.medium_text, FontWeight.w500,
+                      AppColor.whiteColor),
                   CheckButtonContainerWidget(
                     color: AppColor.greenColor,
                     borderColor: AppColor.greenColor,
@@ -147,5 +142,45 @@ class QuestionScreen extends StatelessWidget {
                 ])),
       ),
     );
+  }
+
+  questionContainer(homeViewModel) {
+    return Flexible(
+        fit: FlexFit.tight,
+        child: PageView.builder(
+            controller: homeViewModel.pageController,
+            onPageChanged: homeViewModel.openNextIndex,
+            itemCount: homeViewModel.questionList.length,
+            itemBuilder: (context, index) {
+            
+              return Container(
+                child: Column(
+                  children: [
+                    Column(children: [
+                      Container(
+                        height: SizeConfig.safeBlockVertical! * 16,
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              //question
+                              Text(
+                                  homeViewModel.questionList[index].qtn)
+                            ]),
+                      ),
+                      SizedBox(height: AppSizes.large_dimension),
+                        //option
+                        Text(homeViewModel.questionList[index].option.a),
+                        Text(homeViewModel.questionList[index].option.b),
+                        Text(homeViewModel.questionList[index].option.c),
+                        Text(homeViewModel.questionList[index].option.d),
+
+
+
+                  
+                    ]),
+                  ],
+                ),
+              );
+            }));
   }
 }

@@ -1,24 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:quiz_app/src/features/bottom_nav/view_model/bottom_nav_view_model.dart';
 import 'package:quiz_app/src/features/category/view/category_screen.dart';
 import 'package:quiz_app/src/features/home/view/home_screen.dart';
 import 'package:quiz_app/src/features/notification/view/notification_screen.dart';
 
-import '../../core/constants/app_color.dart';
-import '../../core/utilities/size-config.dart';
-import '../menu/view/menue_screen.dart';
+import '../../../core/constants/app_color.dart';
+import '../../../core/utilities/size-config.dart';
+import '../../menu/view/menue_screen.dart';
 
-class BottomNav extends StatefulWidget {
-  const BottomNav({Key? key}) : super(key: key);
-
-  @override
-  _BottomNavState createState() => _BottomNavState();
-}
-
-class _BottomNavState extends State<BottomNav> {
-  int currentIndex = 0;
+class BottomNav extends StatelessWidget {
+  BottomNav({Key? key}) : super(key: key);
 
   final screens = [
-    const HomeScreen(),
+    HomeScreen(),
     const NotificationScreen(),
     const CategoryScreen(),
     const MenuScreen(),
@@ -26,8 +21,10 @@ class _BottomNavState extends State<BottomNav> {
 
   @override
   Widget build(BuildContext context) {
+    BottomNavViewModel bottomNavViewModel = context.watch<BottomNavViewModel>();
+
     return Scaffold(
-      body: screens[currentIndex],
+      body: screens[bottomNavViewModel.currentIndex],
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomNavigationBar(
           showUnselectedLabels: true,
@@ -35,8 +32,8 @@ class _BottomNavState extends State<BottomNav> {
           backgroundColor: Colors.white,
           selectedItemColor: AppColor.iconColor,
           unselectedItemColor: AppColor.skyBgColor,
-          currentIndex: currentIndex,
-          onTap: (index) => setState(() => currentIndex = index),
+          currentIndex: bottomNavViewModel.currentIndex,
+          onTap: (index) => bottomNavViewModel.setCurrentIndex(index),
           items: [
             const BottomNavigationBarItem(
               icon: Icon(
