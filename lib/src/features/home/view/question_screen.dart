@@ -13,13 +13,15 @@ import '../../../widgets/divider_break_line.dart';
 import '../model/question_model.dart';
 
 class QuestionScreen extends StatelessWidget {
-  const QuestionScreen({Key? key}) : super(key: key);
+  QuestionScreen({Key? key}) : super(key: key);
+
+  int questionIndex = 1;
 
   @override
   Widget build(BuildContext context) {
     HomeViewModel homeViewModel = context.watch<HomeViewModel>();
 
-    int? qtn = 06;
+    // int? qtn = 06;
     return Scaffold(
         backgroundColor: AppColor.bgColor,
         body: SafeArea(
@@ -39,11 +41,17 @@ class QuestionScreen extends StatelessWidget {
                     questionText(AppString.question, AppSizes.xlarge_dimension,
                         FontWeight.w700, AppColor.whiteColor),
                     SizedBox(width: AppSizes.small_dimension),
-                    questionText(qtn.toString(), AppSizes.xxlarge_dimension,
-                        FontWeight.w700, AppColor.whiteColor),
+                    questionText(
+                        questionIndex.toString(),
+                        AppSizes.xxlarge_dimension,
+                        FontWeight.w700,
+                        AppColor.whiteColor),
                     SizedBox(width: AppSizes.small_dimension),
-                    questionText("/20", AppSizes.xxlarge_dimension,
-                        FontWeight.w400, AppColor.textColor),
+                    questionText(
+                        "/${homeViewModel.questions.length}",
+                        AppSizes.xxlarge_dimension,
+                        FontWeight.w400,
+                        AppColor.textColor),
                   ]),
                   dividerLines(20),
                   //QUESTION
@@ -115,12 +123,12 @@ class QuestionScreen extends StatelessWidget {
     );
   }
 
-  optionsWidget(option, index) {
+  optionsWidget(option) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: AppSizes.horizontal_padding),
       child: InkWell(
         onTap: () {
-          print('selected index ${index.Options}');
+          // print('selected option ${option}');
         },
         child: Container(
             decoration: BoxDecoration(
@@ -150,9 +158,9 @@ class QuestionScreen extends StatelessWidget {
         child: PageView.builder(
             controller: homeViewModel.pageController,
             onPageChanged: homeViewModel.openNextIndex,
-            itemCount: homeViewModel.questionList.length,
+            itemCount: homeViewModel.questions.length,
             itemBuilder: (context, index) {
-            
+              questionIndex = index + 1;
               return Container(
                 child: Column(
                   children: [
@@ -163,20 +171,15 @@ class QuestionScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               //question
-                              Text(
-                                  homeViewModel.questionList[index].qtn)
+                              questionsBox(
+                                  homeViewModel.questions[index]['qtn'])
                             ]),
                       ),
                       SizedBox(height: AppSizes.large_dimension),
-                        //option
-                        Text(homeViewModel.questionList[index].option.a),
-                        Text(homeViewModel.questionList[index].option.b),
-                        Text(homeViewModel.questionList[index].option.c),
-                        Text(homeViewModel.questionList[index].option.d),
-
-
-
-                  
+                      //option
+                      ...(homeViewModel.questions[index]['option']
+                              as List<Map<String, Object>>)
+                          .map((ans) => optionsWidget(ans['opt']))
                     ]),
                   ],
                 ),

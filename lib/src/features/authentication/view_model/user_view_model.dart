@@ -13,7 +13,7 @@ class UserViewModel extends ChangeNotifier{
   Timer? timer;
     io.File? profileImage;
 
-    //profile image picker
+  
   Future pickImage() async {
     try {
       final image = await ImagePicker().pickImage(source: ImageSource.gallery);

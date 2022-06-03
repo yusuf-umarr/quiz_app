@@ -122,7 +122,7 @@ class HomeScreen extends StatelessWidget {
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      const QuestionScreen()));
+                                       QuestionScreen()));
                         }),
                     QuizBox(
                         img: AppImage.math_logo, text: AppString.mathematics),
