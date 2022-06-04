@@ -18,18 +18,17 @@ class SignInScreen extends StatelessWidget {
   SignInScreen({Key? key}) : super(key: key);
   Timer? timer;
   @override
-
   @override
   Widget build(BuildContext context) {
     UserViewModel userViewModel = context.watch<UserViewModel>();
 
-    Future.delayed(const Duration(milliseconds: 100), () {
-          userViewModel.nextPage();
-        });
-
-  
     return Scaffold(
         backgroundColor: AppColor.bgColor,
+        appBar: AppBar(
+          title: const Text(AppString.sign_in),
+          centerTitle: true,
+          backgroundColor: AppColor.bgColor,
+        ),
         body: SafeArea(
           child: SingleChildScrollView(
             child: Container(
@@ -38,10 +37,10 @@ class SignInScreen extends StatelessWidget {
                   horizontal: AppSizes.large_text,
                   vertical: AppSizes.large_text),
               child: Column(children: [
-                homeText(AppString.welcome, AppSizes.large_dimension,
-                    FontWeight.w700, AppColor.iconColor),
-                SizedBox(height: AppSizes.xxlarge_dimension),
-                onboardContainer(userViewModel),
+                SizedBox(height: AppSizes.xxxxlarge_dimension),
+                Icon(Icons.login_outlined,
+                    size: SizeConfig.safeBlockVertical! * 20,
+                    color: AppColor.whiteColor),
                 SizedBox(height: AppSizes.xxxxlarge_dimension),
                 Column(children: [
                   CustomInput(
@@ -54,7 +53,10 @@ class SignInScreen extends StatelessWidget {
                       alignText: TextAlign.start,
                       label: AppString.password_hint,
                       hint: '',
-                      onChanged: (val) async {}),
+                      onChanged: (val) async {},
+                        isSecure: userViewModel.isSecure,
+                       suffixIcon: userViewModel.passwordVisibility(),
+                      ),
                 ]),
                 SizedBox(height: AppSizes.xlarge_dimension),
                 Row(
@@ -73,10 +75,8 @@ class SignInScreen extends StatelessWidget {
                 SizedBox(height: AppSizes.xlarge_dimension),
                 AppLargeButton(
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>  BottomNav()));
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => BottomNav()));
                     },
                     text: AppString.sign_in,
                     backgroundColor: AppColor.iconColor),
@@ -88,7 +88,6 @@ class SignInScreen extends StatelessWidget {
                   SizedBox(width: AppSizes.small_dimension),
                   InkWell(
                     onTap: () {
-                      //SignUpScreen
                       Navigator.push(
                           context,
                           MaterialPageRoute(

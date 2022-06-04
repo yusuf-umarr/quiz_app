@@ -9,24 +9,25 @@ import 'package:quiz_app/src/features/bottom_nav/view/bottom_nav.dart';
 import 'package:quiz_app/src/features/bottom_nav/view_model/bottom_nav_view_model.dart';
 import 'package:quiz_app/src/features/home/view/question_screen.dart';
 import 'package:quiz_app/src/features/home/view/result_screen.dart';
-import 'package:quiz_app/src/features/home/view/widget/app_list.dart';
 import 'package:quiz_app/src/features/home/view_model/home_view_model.dart';
+import 'package:quiz_app/src/features/starter/onboard_view_model.dart';
+import 'package:quiz_app/src/features/starter/view/onboard_screen.dart';
+import 'package:quiz_app/src/widgets/question_list.dart';
 
 import 'src/features/authentication/view/sign_in.dart';
-
 
 GetIt getIt = GetIt.instance;
 
 void main() {
-    getIt.registerSingleton<GetAppList>(GetAppList(), signalsReady: true);
+  getIt.registerSingleton<QuestionList>(QuestionList(), signalsReady: true);
 
   runApp(
     MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (_) => OnboadViewModel()),
         ChangeNotifierProvider(create: (_) => HomeViewModel()),
-                ChangeNotifierProvider(create: (_) => UserViewModel()),
-                ChangeNotifierProvider(create: (_) => BottomNavViewModel()),
-
+        ChangeNotifierProvider(create: (_) => UserViewModel()),
+        ChangeNotifierProvider(create: (_) => BottomNavViewModel()),
       ],
       child: const MyApp(),
     ),
@@ -52,6 +53,6 @@ class MyHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    return  SignInScreen();
+    return OnboardScreen();
   }
 }

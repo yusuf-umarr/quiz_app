@@ -68,11 +68,15 @@ flutter:
     - assets/images/thinking.png
     - assets/images/congrat_cup.png
     - assets/images/celebrateBg.jpg
-    - assets/images/onboard1.jpg
     - assets/images/onboard2.jpg
-    - assets/images/onboard3.jpeg
-    - assets/images/onboard5.jpg
-    - assets/images/onboard6.jpg
+    - assets/images/onboard0.jpg
+    - assets/images/onboard7.jpg
+    - assets/images/onboard8.jpg
+    - assets/images/math_s1.PNG
+    - assets/images/math_s2.PNG
+    - assets/images/math_s3.PNG
+    - assets/images/math_s4.PNG
+    - assets/images/math_s5.PNG
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

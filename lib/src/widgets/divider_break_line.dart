@@ -8,151 +8,27 @@ class DividerBreakLine extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [
-
-dividerLines(20)
-        // Expanded(
-        //     child: Divider(
-        //   color: AppColor.whiteColor,
-        //   thickness: AppSizes.xtiny_dimension,
-        // )),
-        // SizedBox(width: AppSizes.small_dimension),
-        // Expanded(
-        //     child: Divider(
-        //   color: AppColor.whiteColor,
-        //   thickness: AppSizes.xtiny_dimension,
-        // )),
-        // SizedBox(width: AppSizes.small_dimension),
-        // Expanded(
-        //     child: Divider(
-        //   color: AppColor.whiteColor,
-        //   thickness: AppSizes.xtiny_dimension,
-        // )),
-        // SizedBox(width: AppSizes.small_dimension),
-        // Expanded(
-        //     child: Divider(
-        //   color: AppColor.whiteColor,
-        //   thickness: AppSizes.xtiny_dimension,
-        // )),
-        // SizedBox(width: AppSizes.small_dimension),
-        // Expanded(
-        //     child: Divider(
-        //   color: AppColor.whiteColor,
-        //   thickness: AppSizes.xtiny_dimension,
-        // )),
-        // SizedBox(width: AppSizes.small_dimension),
-        // Expanded(
-        //     child: Divider(
-        //   color: AppColor.whiteColor,
-        //   thickness: AppSizes.xtiny_dimension,
-        // )),
-        // SizedBox(width: AppSizes.small_dimension),
-        // Expanded(
-        //     child: Divider(
-        //   color: AppColor.whiteColor,
-        //   thickness: AppSizes.xtiny_dimension,
-        // )),
-        // SizedBox(width: AppSizes.small_dimension),
-        // Expanded(
-        //     child: Divider(
-        //   color: AppColor.whiteColor,
-        //   thickness: AppSizes.xtiny_dimension,
-        // )),
-        // SizedBox(width: AppSizes.small_dimension),
-        // Expanded(
-        //     child: Divider(
-        //   color: AppColor.whiteColor,
-        //   thickness: AppSizes.xtiny_dimension,
-        // )),
-        // SizedBox(width: AppSizes.small_dimension),
-        // Expanded(
-        //     child: Divider(
-        //   color: AppColor.whiteColor,
-        //   thickness: AppSizes.xtiny_dimension,
-        // )),
-        // SizedBox(width: AppSizes.small_dimension),
-        // Expanded(
-        //     child: Divider(
-        //   color: AppColor.whiteColor,
-        //   thickness: AppSizes.xtiny_dimension,
-        // )),
-        // SizedBox(width: AppSizes.small_dimension),
-        // Expanded(
-        //     child: Divider(
-        //   color: AppColor.whiteColor,
-        //   thickness: AppSizes.xtiny_dimension,
-        // )),
-        // SizedBox(width: AppSizes.small_dimension),
-        // Expanded(
-        //     child: Divider(
-        //   color: AppColor.whiteColor,
-        //   thickness: AppSizes.xtiny_dimension,
-        // )),
-        // SizedBox(width: AppSizes.small_dimension),
-        // Expanded(
-        //     child: Divider(
-        //   color: AppColor.whiteColor,
-        //   thickness: AppSizes.xtiny_dimension,
-        // )),
-        // SizedBox(width: AppSizes.small_dimension),
-        // Expanded(
-        //     child: Divider(
-        //   color: AppColor.whiteColor,
-        //   thickness: AppSizes.xtiny_dimension,
-        // )),
-        // SizedBox(width: AppSizes.small_dimension),
-        // Expanded(
-        //     child: Divider(
-        //   color: AppColor.whiteColor,
-        //   thickness: AppSizes.xtiny_dimension,
-        // )),
-        // SizedBox(width: AppSizes.small_dimension),
-        // Expanded(
-        //     child: Divider(
-        //   color: AppColor.whiteColor,
-        //   thickness: AppSizes.xtiny_dimension,
-        // )),
-        // SizedBox(width: AppSizes.small_dimension),
-        // Expanded(
-        //     child: Divider(
-        //   color: AppColor.whiteColor,
-        //   thickness: AppSizes.xtiny_dimension,
-        // )),
-        // SizedBox(width: AppSizes.small_dimension),
-        // Expanded(
-        //     child: Divider(
-        //   color: AppColor.whiteColor,
-        //   thickness: AppSizes.xtiny_dimension,
-        // )),
-        // SizedBox(width: AppSizes.small_dimension),
-        // // Expanded(
-        //     // child:
-        //      Divider(
-        //   color: AppColor.whiteColor,
-        //   thickness: AppSizes.xtiny_dimension,
-        // ),
-        // // ),
-        // SizedBox(width: AppSizes.small_dimension),
-      ],
+      children: [dividerLines(20)],
     );
   }
 
-  dividerLines(num){
+  dividerLines(num) {
     Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: List.generate(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: List.generate(
           num,
-          (index) => 
-          //  Expanded(
-          //   child:
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: AppSizes.small_dimension),
-              child: Divider(
-          color: AppColor.whiteColor,
-          thickness: AppSizes.xtiny_dimension,
-        ),
-            )),
-        // )
-        );
+          (index) =>
+              //  Expanded(
+              //   child:
+              Padding(
+                padding:
+                    EdgeInsets.symmetric(horizontal: AppSizes.small_dimension),
+                child: Divider(
+                  color: AppColor.whiteColor,
+                  thickness: AppSizes.xtiny_dimension,
+                ),
+              )),
+      // )
+    );
   }
 }

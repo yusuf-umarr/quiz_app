@@ -3,17 +3,14 @@ import 'package:flutter/material.dart';
 import 'dart:io' as io;
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
-import '../../../core/constants/app_image.dart';
-import '../../../core/constants/app_string.dart';
-import '../model/onboard_model.dart';
+import '../../../core/constants/app_color.dart';
 
-class UserViewModel extends ChangeNotifier{
-   var selectedPageIndex = 0;
+class UserViewModel extends ChangeNotifier {
+  var selectedPageIndex = 0;
   var pageController = PageController();
-  Timer? timer;
-    io.File? profileImage;
+  bool isSecure = true;
+  io.File? profileImage;
 
-  
   Future pickImage() async {
     try {
       final image = await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -28,59 +25,18 @@ class UserViewModel extends ChangeNotifier{
     notifyListeners();
   }
 
-
- 
-
-  List<OnboardModel> onboardList = [
-    OnboardModel(AppString.onboard_desc_one, AppImage.onboard_one),
-    OnboardModel(AppString.onboard_desc_two, AppImage.onboard_two),
-    OnboardModel(AppString.onboard_desc_three, AppImage.onboard_three),
-    OnboardModel(AppString.onboard_desc_four, AppImage.onboard_four),
-
-  ];
-
-
-  
-  bool get isLastPage => selectedPageIndex == onboardList.length - 1;
-
-  bool get isFirstPage => selectedPageIndex == onboardList[0];
-
-
-  openNextIndex(int page) {
-    selectedPageIndex = page;
-    notifyListeners();
-  }
-
- 
-  prevPage() {
-    if (!isFirstPage) {
-      pageController.previousPage(
-          duration: const Duration(milliseconds: 400), curve: Curves.ease);
-    } 
-  }
-
-  nextPage() {
-    if (!isLastPage) {
-
-          timer = Timer.periodic(Duration(milliseconds: 100), (timer) {
-
-      pageController.nextPage(
-          duration: const Duration(milliseconds: 2000), curve: Curves.ease);
-    });
-
-    
-      
-    } 
-    
-
-
+  passwordVisibility() {
+    return IconButton(
+      icon: Icon(isSecure ? Icons.visibility_off : Icons.visibility,
+          color: AppColor.iconColor),
+      onPressed: () {
+        isSecure = !isSecure;
+        notifyListeners();
+     
+      },
+    );
   }
 
 
-   @override
-  void dispose() {
-    timer!.cancel();
-    super.dispose();
-  }
 
-} 
+}

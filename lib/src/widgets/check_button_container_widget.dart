@@ -14,8 +14,7 @@ class CheckButtonContainerWidget extends StatelessWidget {
         decoration: BoxDecoration(
             color: color,
             border: Border.all(color: borderColor),
-            // borderRadius:
-            //     BorderRadius.circular(SizeConfig.safeBlockHorizontal! * 1),
+           
             shape: BoxShape.circle),
         child: Icon(Icons.check,
             size: SizeConfig.safeBlockHorizontal! * 3.5, color: Colors.white));

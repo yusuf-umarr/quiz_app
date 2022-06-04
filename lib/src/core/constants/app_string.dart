@@ -15,6 +15,8 @@ class AppString {
   static const String enter_email_reset_pass =
       "Enter your email and create a new password ";
   static const String go_back_sign_in = "Go back and ";
+  static const String enter_your_email_password_sign_in =
+      "Enter your email, password and sign in to your account";
 
 //Sign up
   static const String introduce_yourself = "Introduce Yourself";
@@ -45,22 +47,30 @@ class AppString {
   static const String quit = "Quit";
   static const String next = "Next";
   static const String result = "Result";
+  static const String are_you_you_want_to_end = "Are sure you want to End Quiz ?";
+  static const String are_you_you_want_to_submit = "Are sure you want to Submit ?";
+  static const String yes = "Yes";
+  static const String no = "No";
+  static const String submit = "Submit";
 
   static const String take_new_quiz = "Take New Quiz";
   static const String share_result = "Share Results";
   static const String your_score = "Your Score";
   static const String congratulations = "Congratulations!";
   static const String you_have_unlock = "You have unlock a new badge";
+  static const String view_solution = "View Solution";
+  static const String solution = "Solution";
 
-  //category 
-    static const String quiz_categories = "Quiz Categories";
+  //category
+  static const String quiz_categories = "Quiz Categories";
 
-
-    //onboard desc
-        static const String onboard_desc_one = "Quiz Categories";
-        static const String onboard_desc_two = "Quiz Categories";
-        static const String onboard_desc_three = "Quiz Categories";
-        static const String onboard_desc_four = "Quiz Categories";
-
-
+  //onboard desc
+  static const String onboard_desc_one = "";
+  static const String onboard_desc_two = "You're on the right track ";
+  static const String onboard_desc_three = "We got you";
+  static const String onboard_desc_four = "Check In";
+  static const String onboard_title_one = "Welcome";
+  static const String onboard_title_two = "Want some practice Q?A?";
+  static const String onboard_title_three = "Seeking for admission?";
+  static const String onboard_title_four = "Are a UTME Candidate?";
 }

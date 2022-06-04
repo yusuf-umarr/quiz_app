@@ -3,11 +3,16 @@ import 'package:quiz_app/src/core/constants/app_color.dart';
 import 'package:quiz_app/src/core/constants/app_image.dart';
 import 'package:quiz_app/src/core/constants/app_string.dart';
 import 'package:quiz_app/src/core/utilities/size-config.dart';
+import 'package:quiz_app/src/features/home/view/solution_screen.dart';
 import 'package:quiz_app/src/widgets/buttonWidget.dart';
+import '../../../../main.dart';
 import '../../../core/constants/app_sizes.dart';
+import '../../../widgets/question_list.dart';
+import '../../bottom_nav/view/bottom_nav.dart';
 
 class ResultScreen extends StatelessWidget {
-  const ResultScreen({Key? key}) : super(key: key);
+  ResultScreen({Key? key}) : super(key: key);
+  var questions = getIt.get<QuestionList>().questions;
 
   @override
   Widget build(BuildContext context) {
@@ -86,26 +91,35 @@ class ResultScreen extends StatelessWidget {
                     ButtonWidget(
                       bgColor: AppColor.whiteColor,
                       textColor: AppColor.bgColor,
-                      iconWidget: Row(children: [
-                        Icon(Icons.share, color: AppColor.bgColor),
-                        SizedBox(width: AppSizes.small_dimension),
-                      ]),
-                      text: AppString.share_result,
-                      ontap: () {},
+                      text: AppString.view_solution,
+                      ontap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SolutionScreen(
+                                      qtn: questions,
+                                    )));
+                        //SolutionScreen(qtn: questions,)
+                      },
                     ),
                     Spacer(),
                     ButtonWidget(
                         bgColor: AppColor.iconColor,
                         textColor: AppColor.whiteColor,
-                        text: 'Take New Quiz',
+                        text: AppString.take_new_quiz,
                         ontap: () {}),
                   ],
                 ),
                 SizedBox(height: AppSizes.xxxxlarge_dimension),
                 Column(children: [
-                  Icon(Icons.home_outlined,
-                      color: AppColor.iconColor,
-                      size: AppSizes.xxxlarge_dimension)
+                  InkWell(
+                    onTap: () {
+                      removeUntil(context, BottomNav());
+                    },
+                    child: Icon(Icons.home_outlined,
+                        color: AppColor.iconColor,
+                        size: AppSizes.xxxlarge_dimension),
+                  )
                 ])
               ],
             )));
@@ -120,5 +134,12 @@ class ResultScreen extends StatelessWidget {
           fontWeight: fontWeight,
           color: color),
     );
+  }
+
+  void removeUntil(context, screen) {
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (BuildContext context) => screen),
+        (Route<dynamic> route) => false);
   }
 }
