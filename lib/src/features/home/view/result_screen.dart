@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:quiz_app/src/core/constants/app_color.dart';
 import 'package:quiz_app/src/core/constants/app_image.dart';
 import 'package:quiz_app/src/core/constants/app_string.dart';
 import 'package:quiz_app/src/core/utilities/size-config.dart';
 import 'package:quiz_app/src/features/home/view/solution_screen.dart';
+import 'package:quiz_app/src/features/home/view_model/home_view_model.dart';
 import 'package:quiz_app/src/widgets/buttonWidget.dart';
 import '../../../../main.dart';
 import '../../../core/constants/app_sizes.dart';
@@ -16,6 +18,8 @@ class ResultScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+        HomeViewModel homeViewModel = context.watch<HomeViewModel>();
+
     int total = 20;
     return Scaffold(
         backgroundColor: AppColor.bgColor,
@@ -114,6 +118,8 @@ class ResultScreen extends StatelessWidget {
                 Column(children: [
                   InkWell(
                     onTap: () {
+                      homeViewModel.score = 0;
+
                       removeUntil(context, BottomNav());
                     },
                     child: Icon(Icons.home_outlined,

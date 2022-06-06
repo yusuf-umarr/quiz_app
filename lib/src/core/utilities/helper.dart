@@ -59,7 +59,9 @@ extension HelperExtension on BuildContext {
                           if (homeViewModel.selectedOption) {
                           homeViewModel.score++;
                           homeViewModel.selectedOption = false;
+                         homeViewModel.resetPageController(); 
                           print('selected score' + homeViewModel.score.toString());
+
                         }
                         
                         removeUntil(context);

@@ -2,8 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz_app/main.dart';
 import 'package:quiz_app/src/widgets/question_list.dart';
-import '../../../core/constants/app_image.dart';
-import '../model/question_model.dart';
 
 class HomeViewModel extends ChangeNotifier {
   var questions = getIt.get<QuestionList>().questions;
@@ -60,7 +58,15 @@ class HomeViewModel extends ChangeNotifier {
 
   totgleLastAns() {
     isLastAns = true;
-    print(isLastAns);
+    // print(isLastAns);
     notifyListeners();
   }
+
+  resetPageController() {
+    pageController.jumpToPage(0);
+    // score = 0; 
+    notifyListeners();
+  }
+
+
 }

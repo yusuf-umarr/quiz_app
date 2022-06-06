@@ -11,6 +11,8 @@ class UserViewModel extends ChangeNotifier {
   bool isSecure = true;
   io.File? profileImage;
 
+bool isLoading = false;
+
   Future pickImage() async {
     try {
       final image = await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -35,6 +37,12 @@ class UserViewModel extends ChangeNotifier {
      
       },
     );
+  }
+
+
+    setLoading(bool loading) async {
+    isLoading = loading;
+    notifyListeners();
   }
 
 

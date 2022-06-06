@@ -13,12 +13,17 @@ import 'package:quiz_app/src/features/home/view_model/home_view_model.dart';
 import 'package:quiz_app/src/features/starter/onboard_view_model.dart';
 import 'package:quiz_app/src/features/starter/view/onboard_screen.dart';
 import 'package:quiz_app/src/widgets/question_list.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'src/features/authentication/view/sign_in.dart';
 
 GetIt getIt = GetIt.instance;
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+        SharedPreferences sharePreference = await SharedPreferences.getInstance();
+        var token = sharePreference.getString('token');
+
   getIt.registerSingleton<QuestionList>(QuestionList(), signalsReady: true);
 
   runApp(
@@ -29,30 +34,32 @@ void main() {
         ChangeNotifierProvider(create: (_) => UserViewModel()),
         ChangeNotifierProvider(create: (_) => BottomNavViewModel()),
       ],
-      child: const MyApp(),
+      child:  MyApp(token: token,),
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  var token;
+   MyApp({Key? key, required this.token}) : super(key: key);
 
   @override
   //uses a build method to rendered the MateriaApp
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return  MaterialApp(
       title: 'PlayKosmos',
       debugShowCheckedModeBanner: false,
-      home: MyHome(),
+      home: MyHome(token: token,),
     );
   }
 }
 
 class MyHome extends StatelessWidget {
-  const MyHome({Key? key}) : super(key: key);
+  var token;
+   MyHome({Key? key, required this.token}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    return OnboardScreen();
+    return token !=null ? BottomNav() :  OnboardScreen();
   }
 }
