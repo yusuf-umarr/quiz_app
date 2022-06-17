@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:quiz_app/src/core/constants/config.dart';
+import 'package:quiz_app/src/services/api_status_code.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../features/authentication/model/login_request_model.dart';
 import '../features/authentication/model/login_response_model.dart';
@@ -12,55 +13,53 @@ import 'api_status.dart';
 class ApiService {
   static var client = http.Client();
 
-  static Future<dynamic> login(LoginRequestModel model) async {
-  try{
+  static Future<Object> login(LoginRequestModel model) async {
+           print("seen!!!!!!!!! !!");
+
+    try {
       Map<String, String> requestHeaders = {
-      "Content-Type": "application/json",
-    };
+        "Content-Type": "application/json",
+      };
 
-    var url = Uri.http(Config.apiURL, Config.loginAPI);
+      var url = Uri.http(Config.apiURL, Config.loginAPI);
 
-    var response = await client.post(
-      url,
-      headers: requestHeaders,
-      body: jsonEncode(model.toJson()),
-    );
+      var response = await client.post(
+        url,
+        headers: requestHeaders,
+        body: jsonEncode(model.toJson()),
+      );
+//convert to map and decode
+      if (response.statusCode == 200) {
+             print("response okay!!!!!!!!! !!");
+        Map<String, dynamic> output = json.decode(response.body);
+        // sharefre
 
-    if (response.statusCode == 200) {
-      Map<String, dynamic> output = json.decode(response.body);
+        var encodedUser = output['user'];
+//encode user and save to sharefreprefrence
+        var newUser = jsonEncode(encodedUser);
 
-      // sharefre
-      SharedPreferences sharePreference = await SharedPreferences.getInstance();
-      sharePreference.setString('token', output['token']);
+        SharedPreferences sharePreference =
+            await SharedPreferences.getInstance();
+        sharePreference.setString('token', output['token']);
 
-      // print(output['token']);
-      // print(output );
+        sharePreference.setString('user', newUser);
 
-      return Success(response: loginResponseJson(response.body));
-      // return true;
-    } return Failure(code: Config.USER_INVALID_RESPONSE, errorResponse: "Invalid Response");
-
-    
-  
-  
-  }
-  on HttpException {
-      return Failure(code: Config.NO_INTERNET, errorResponse: 'No Internet connection');
-
+        return Success(response: loginResponseModelFromJson(response.body));
+        // return Success(response: loginResponseModelFromJson(response.body));
+      }
+      return Failure(
+          code: USER_INVALID_RESPONSE, errorResponse: 'Invalid Response');
+    } on HttpException {
+      return Failure(
+          code: NO_INTERNET, errorResponse: 'Please check your connection');
+    } on SocketException {
+      return Failure(
+          code: NO_INTERNET, errorResponse: 'Please check your connection');
+    } on FormatException {
+      return Failure(code: INVALID_FORMAT, errorResponse: 'Invalid Format');
+    } catch (e) {
+      return Failure(code: UNKNOWN_ERROR, errorResponse: 'Unknown Error');
     }
-       on SocketException {
-      return Failure(code: Config.NO_INTERNET, errorResponse: 'No Internet connection');
-    } 
-    on FormatException {
-      return Failure(code: Config.INVALID_FORMAT, errorResponse: 'Invalid Format');
-    }
-  
-  catch (e) {
-     return Failure(code:Config.UNKNOWN_ERROR, errorResponse: 'Unknown Error');
-  }
-    // else {
-    //   return false;
-    // }
   }
 
   static Future<RegisterResponseModel> register(
@@ -80,3 +79,12 @@ class ApiService {
     return registerResponseModel(response.body);
   }
 }
+
+
+/*
+ if (userViewModel.userError != null) {
+      return AppError(
+        errorText:userViewModel.userError?.message.toString(),
+      );
+    }
+*/

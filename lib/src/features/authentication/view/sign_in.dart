@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quiz_app/src/core/constants/app_color.dart';
@@ -11,9 +10,10 @@ import 'package:quiz_app/src/features/authentication/view/sign_up.dart';
 import 'package:quiz_app/src/features/authentication/view_model/user_view_model.dart';
 import 'package:quiz_app/src/widgets/custom_input.dart';
 import 'package:quiz_app/src/widgets/large_buttons.dart';
-
 import '../../../core/constants/app_sizes.dart';
 import '../../../services/api_service.dart';
+import '../../../services/api_status.dart';
+import '../../../widgets/app_error.dart';
 import '../../bottom_nav/view/bottom_nav.dart';
 import '../../home/view/widget/app_loading.dart';
 
@@ -37,6 +37,7 @@ class SignInScreen extends StatelessWidget {
         ),
         body: SafeArea(
           child: SingleChildScrollView(
+            reverse: true,
             child: Container(
               height: SizeConfig.safeBlockVertical! * 100,
               padding: EdgeInsets.symmetric(
@@ -54,14 +55,18 @@ class SignInScreen extends StatelessWidget {
                       label: AppString.email_hint,
                       hint: '',
                       controller: emailController,
-                      onChanged: (val) async {}),
+                      onChanged: (val) async {
+                        userViewModel.loginRequestModel?.email = val!;
+                      }),
                   SizedBox(height: AppSizes.xxxlarge_dimension),
                   CustomInput(
                     alignText: TextAlign.start,
                     label: AppString.password_hint,
                     hint: '',
                     controller: passwordController,
-                    onChanged: (val) async {},
+                    onChanged: (val) async {
+                      userViewModel.loginRequestModel?.password = val!;
+                    },
                     isSecure: userViewModel.isSecure,
                     suffixIcon: userViewModel.passwordVisibility(),
                   ),
@@ -81,36 +86,24 @@ class SignInScreen extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: AppSizes.xlarge_dimension),
-                userViewModel.isLoading? const AppLoading():
-                AppLargeButton(
-                    onTap: () {
-                       userViewModel.setLoading( true) ;
-                      LoginRequestModel model = LoginRequestModel(
-                          email: emailController.text,
-                          password: passwordController.text);
-                      ApiService.login(model).then((response) => {
-                            if (response)
-                           
-                              {
-                                //  print(response),
-                                //  print( _data['token']),
-                                   userViewModel.setLoading( false),
-                                Navigator.pushAndRemoveUntil(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (BuildContext context) =>
-                                            BottomNav()),
-                                    (Route<dynamic> route) => false)
-                              } else{
-                                print("Invalid email/password")
-                              }
-                          });
-                      // Navigator.push(context,
-                      //     MaterialPageRoute(builder: (context) => BottomNav()));
-                    },
-                    text: AppString.sign_in,
-                    backgroundColor: AppColor.iconColor),
-
+                userViewModel.isLoading
+                    ? loadingContainer()
+                    : userViewModel.userError != null
+                        ? AppError(
+                            errorText:
+                                userViewModel.userError?.message.toString(),
+                          )
+                        : AppLargeButton(
+                            onTap: () async {
+                              LoginRequestModel model = LoginRequestModel(
+                                  email: emailController.text,
+                                  password: passwordController.text);
+                              userViewModel.setLoading(true);
+                              await userViewModel.setLogingResponse(
+                                  model, context);
+                            },
+                            text: AppString.sign_in,
+                            backgroundColor: AppColor.iconColor),
                 SizedBox(height: AppSizes.xxxxlarge_dimension),
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                   // Spacer(),
@@ -132,6 +125,17 @@ class SignInScreen extends StatelessWidget {
             ),
           ),
         ));
+  }
+
+  loadingContainer() {
+    return Container(
+        height: SizeConfig.safeBlockVertical! * 6.66,
+        width: SizeConfig.safeBlockHorizontal! * 90,
+        decoration: BoxDecoration(
+            color: AppColor.iconColor,
+            borderRadius: BorderRadius.circular(AppSizes.large_dimension),
+            border: Border.all(color: AppColor.iconColor)),
+        child: const AppLoading());
   }
 
   homeText(text, fontSize, fontWeight, color) {
@@ -190,31 +194,46 @@ class SignInScreen extends StatelessWidget {
   }
 }
 
+/*
+ userViewModel.isLoading
+                    ? loadingContainer()
+                    : userViewModel.userError != null
+                        ? AppError(
+                            errorText:
+                                userViewModel.userError?.message.toString(),
+                          )
+                        : AppLargeButton(
+                            onTap: () async {
+                              LoginRequestModel model = LoginRequestModel(
+                                  email: emailController.text,
+                                  password: passwordController.text);
+                              userViewModel.setLoading(true);
+                              await userViewModel.setLogingResponse(
+                                  model, context);
+                            },
+                            text: AppString.sign_in,
+                            backgroundColor: AppColor.iconColor),
+*/
 
 /*
 
- static Future<Object> getUsers() async {
-    try {
-      var url = Uri.parse(USER_LIST);
-      var response = await http.get(url);
-      if (SUCCESS == response.statusCode) {
-        return Success(response: userListModelFromJson(response.body));
-      }
-      //failure object when status code is not 200
-      return Failure(code: USER_INVALID_RESPONSE, errorResponse: 'Invalid Response');
+  getUsers() async {
+    setLoading(true);
+    var response = await UserService.getUsers();
+    if (response is Success) {
+      setUserListModel(response.response as List<UserModel>);
     }
-     on HttpException {
-      return Failure(code: NO_INTERNET, errorResponse: 'No Internet connection');
-    } 
-     on SocketException {
-      return Failure(code: NO_INTERNET, errorResponse: 'No Internet connection');
-    } 
-    
-    on FormatException {
-      return Failure(code: INVALID_FORMAT, errorResponse: 'Invalid Format');
-    } catch (e) {
-      return Failure(code: UNKNOWN_ERROR, errorResponse: 'Unknown Error');
-    }
-  }
+    if (response is Failure) {
+      UserError userError = UserError(
+        code: response.code,
+        message: response.errorResponse,
+      );
 
- */ 
+      setUserError(userError);
+    }
+
+    setLoading(false);
+  }
+}
+
+*/

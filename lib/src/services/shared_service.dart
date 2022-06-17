@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:api_cache_manager/api_cache_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:quiz_app/src/features/authentication/view/sign_in.dart';
 
 import '../features/authentication/model/login_response_model.dart';
 import '../features/authentication/view/sign_up.dart';
@@ -14,16 +15,16 @@ class SharedService {
     return isKeyExist;
   }
 
-  static Future<LoginResponseModel?> loginDetails() async {
-    var isKeyExist =
-        await APICacheManager().isAPICacheKeyExist("Login_details");
+  // static Future<LoginResponseModel?> loginDetails() async {
+  //   var isKeyExist =
+  //       await APICacheManager().isAPICacheKeyExist("Login_details");
 
-    if (isKeyExist) {
-      var cacheData = await APICacheManager().getCacheData("login_detals");
+  //   if (isKeyExist) {
+  //     var cacheData = await APICacheManager().getCacheData("login_detals");
 
-      return loginResponseJson(cacheData.syncData);
-    }
-  }
+  //     return loginResponseJson(cacheData.syncData);
+  //   }
+  // }
 
 //   static Future<void>setLoginDetails(LoginResponseModel model) async {
 
@@ -54,7 +55,7 @@ class SharedService {
 
     Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (BuildContext context) => SignUpScreen()),
+        MaterialPageRoute(builder: (BuildContext context) => SignInScreen()),
         (Route<dynamic> route) => false);
     // Navigator.pushNamedAndRemoveUntil(context, SignUpScreen(), ((route) => false))
   }

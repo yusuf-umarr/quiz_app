@@ -7,7 +7,7 @@ import 'package:quiz_app/src/features/notification/view/notification_screen.dart
 
 import '../../../core/constants/app_color.dart';
 import '../../../core/utilities/size-config.dart';
-import '../../menu/view/menue_screen.dart';
+import '../../menu/view/menu_screen.dart';
 
 class BottomNav extends StatelessWidget {
   BottomNav({Key? key}) : super(key: key);

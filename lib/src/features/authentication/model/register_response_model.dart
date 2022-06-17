@@ -4,12 +4,12 @@ RegisterResponseModel registerResponseModel(String str) =>
 RegisterResponseModel.fromJson(json.decode(str));
 
 class RegisterResponseModel {
-  RegisterResponseModel({
-    required this.user,
-    required this.success,
+  RegisterResponseModel( {
+     this.user,
+     this.success,
   });
-  late final User user;
-  late final bool success;
+  late final User? user;
+  late final bool? success;
   
   RegisterResponseModel.fromJson(Map<String, dynamic> json){
     user = User.fromJson(json['user']);
@@ -19,7 +19,7 @@ class RegisterResponseModel {
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
-    _data['user'] = user.toJson();
+    _data['user'] = user!.toJson();
     _data['success'] = success;
     return _data;
   }

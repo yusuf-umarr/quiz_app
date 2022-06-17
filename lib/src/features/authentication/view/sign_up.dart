@@ -28,6 +28,7 @@ class SignUpScreen extends StatelessWidget {
         body: Container(
           padding: EdgeInsets.symmetric(horizontal: AppSizes.large_text),
           child: ListView(
+            reverse: true,
             children: [
               Column(children: [
                 SizedBox(height: AppSizes.medium_dimension),

@@ -7,6 +7,7 @@ import 'package:quiz_app/src/features/starter/onboard_view_model.dart';
 import 'package:quiz_app/src/widgets/large_buttons.dart';
 import '../../../core/constants/app_color.dart';
 import '../../../core/constants/app_string.dart';
+import '../../../core/utilities/navigation_utils.dart';
 import '../../../core/utilities/size-config.dart';
 
 class OnboardScreen extends StatelessWidget {
@@ -38,10 +39,11 @@ class OnboardScreen extends StatelessWidget {
               ),
               AppLargeButton(
                   onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => SignInScreen()));
+                    Navigator.of(context).push(SignInRoute());
+                    // Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //         builder: (context) => SignInScreen()));
                   },
                   text: AppString.sign_in,
                   backgroundColor: AppColor.bgColor),
